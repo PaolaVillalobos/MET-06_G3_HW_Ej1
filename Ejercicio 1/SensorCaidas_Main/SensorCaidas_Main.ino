@@ -2,11 +2,13 @@
 #include <DallasTemperature.h>
 
 void setup() {
-  TemperaturaSetup();
+
+  Serial.begin(9600);
+  TempHum_Setup();
   // BotonPanicoSetup();
 }
  
 void loop() {
-  TemperaturaLoop();  
+  TempHum_Loop();  
   // BotonPanicoLoop(); 
 }
