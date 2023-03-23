@@ -1,31 +1,47 @@
-// OneWire ourWire(2);                //Se establece el pin 2  como bus OneWire
- 
-// DallasTemperature sensors(&ourWire); //Se declara una variable u objeto para nuestro sensor
-// int maxTemp = 27;
-// bool triggerTemp = false;
+#include "DHT.h" 
 
-// void TemperaturaSetup(){
-//   delay(1000);
-//   Serial.begin(9600);
-//   sensors.begin();   //Se inicia el sensor
-//   Led_Setup();
-// }
+#define DHTPIN 10    //Pin where is the sensor connecte
 
-// void TemperaturaLoop(){
+#define DHTTYPE DHT22   // Sensor DHT22
 
-//   sensors.requestTemperatures();   //Se envía el comando para leer la temperatura
-//   float temp= sensors.getTempCByIndex(0); //Se obtiene la temperatura en ºC
+DHT dht(DHTPIN, DHTTYPE);
 
-//   if (temp > maxTemp){
-//     triggerTemp = true;
-//     Serial.println("EMERGENCIA!!!!");
+int maxTemp = 27;
+bool triggerTemp = false;
 
-//     Led_Loop();
-//   }
+int maxHum = 80;
+bool triggerHum = false;
 
-//   Serial.print("Temperatura= ");
-//   Serial.print(temp);
-//   Serial.println(" C");
-//   delay(1000);   
+void TempHum_Setup(){
+  Serial.println("Loading...");
+  dht.begin(); 
+  Led_Setup();
+}
 
-// }
+void TempHum_Loop(){
+  delay(2000);
+  float h = dht.readHumidity(); //Reading the humidity 
+  float t = dht.readTemperature(); //Reading the temperature in Celsius degree 
+
+//--------Sending the reading through Serial port------------- 
+  if (t > maxTemp){
+    triggerTemp = true;
+    Serial.println("EMERGENCIA TEMPERATURA!!!!");
+
+    Led_Loop();
+  }
+  if (h > maxHum){
+    triggerHum = true;
+    Serial.println("EMERGENCIA HUMEDAD!!!!");
+
+    Led_Loop();
+  }
+
+  Serial.print("Humidity: ");
+  Serial.print(h);
+  Serial.print("%; ");
+  Serial.print("Temperature: ");
+  Serial.print(t);
+  Serial.println(" ºC ");
+
+}
