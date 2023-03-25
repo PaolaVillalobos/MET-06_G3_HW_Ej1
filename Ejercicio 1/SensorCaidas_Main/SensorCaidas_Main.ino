@@ -13,5 +13,5 @@ void loop() {
   BotonPanico_Loop(); 
   TempHum_Loop();   
   Presencia_Loop();
-  
+
 }

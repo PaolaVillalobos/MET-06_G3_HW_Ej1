@@ -1,4 +1,3 @@
-
 const int BUTTON_PIN = 13;
 const int LED_GREEN = 15;
 
