@@ -4,11 +4,14 @@
 void setup() {
 
   Serial.begin(9600);
+  BotonPanico_Setup();
   TempHum_Setup();
-  // BotonPanicoSetup();
+  Presencia_Setup();
 }
  
 void loop() {
-  TempHum_Loop();  
-  // BotonPanicoLoop(); 
+  BotonPanico_Loop(); 
+  TempHum_Loop();   
+  Presencia_Loop();
+  
 }

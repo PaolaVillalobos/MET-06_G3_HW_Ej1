@@ -9,8 +9,10 @@ DHT dht(DHTPIN, DHTTYPE);
 int maxTemp = 27;
 bool triggerTemp = false;
 
+const int CincoS = 5000;
 int maxHum = 80;
 bool triggerHum = false;
+unsigned long lastCincoS = 0;
 
 void TempHum_Setup(){
   Serial.println("Loading...");
@@ -19,7 +21,10 @@ void TempHum_Setup(){
 }
 
 void TempHum_Loop(){
-  delay(2000);
+  
+  
+  if ((millis() - lastCincoS) >= CincoS) { 
+    lastCincoS = millis();
   float h = dht.readHumidity(); //Reading the humidity 
   float t = dht.readTemperature(); //Reading the temperature in Celsius degree 
 
@@ -43,5 +48,7 @@ void TempHum_Loop(){
   Serial.print("Temperature: ");
   Serial.print(t);
   Serial.println(" ºC ");
+  }
+  
 
 }
